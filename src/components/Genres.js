@@ -15,12 +15,12 @@ const Genres = () => {
         setIsLoaded(!isLoaded);
       })
       .catch((error1) => {
-        setError(error1);
+        setError(error1.response.status);
       });
   }, []);
 
   if (error) {
-    return <div>Error: Invalid response code: 404</div>;
+    return <div>Error: Invalid response code: {error}</div>;
   } else if (!isLoaded) {
     return <p>Loading...</p>;
   } else {

@@ -2,18 +2,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-const OneMovie = () => {
+const Onemoviegraphql = () => {
   const [movie, setMovie] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
-  const { from } = location.state;
+  const from = location.pathname.split("");
+  const fromID = from[from.length - 1];
 
   useEffect(() => {
+    const payload = `
+    {
+        movie(id: ${fromID}) {
+            id 
+            title
+            year
+            runtime
+            description
+            release_date
+            rating
+            mpaa_rating
+        }
+    }
+    `;
+
     axios
-      .get(`http://localhost:4000/v1/movie/${from.id}`)
+      .post("http://localhost:4000/v1/graphql", payload)
       .then((json) => {
-        setMovie(json.data.movie);
+        setMovie(json.data.data.movie);
         setIsLoaded(!isLoaded);
       })
       .catch((error1) => {
@@ -80,4 +96,4 @@ const OneMovie = () => {
   }
 };
 
-export default OneMovie;
+export default Onemoviegraphql;

@@ -7,9 +7,13 @@ const Input = ({
   changeState,
   errorDiv,
   errorMsg,
+  performSearch,
 }) => {
   const handleChange = (e) => {
     changeState((prevState) => ({ ...prevState, [name]: e.target.value }));
+    if (name === "search") {
+      performSearch();
+    }
   };
 
   return (
