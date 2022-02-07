@@ -1,19 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Onemoviegraphql = () => {
   const [movie, setMovie] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const location = useLocation();
-  const from = location.pathname.split("");
-  const fromID = from[from.length - 1];
+
+  const movieID = useParams();
 
   useEffect(() => {
     const payload = `
     {
-        movie(id: ${fromID}) {
+        movie(id: ${movieID.id}) {
             id 
             title
             year

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./EditMovie.css";
 import Input from "./form-components/Input";
 import Select from "./form-components/Select";
@@ -36,8 +36,7 @@ const EditMovie = ({ jwt }) => {
     message: "",
   });
 
-  const path = useLocation();
-  const pathArray = path.pathname.split("");
+  const movieID = useParams();
 
   const navigate = useNavigate();
 
@@ -45,10 +44,9 @@ const EditMovie = ({ jwt }) => {
     if (jwt === "") {
       navigate("/login");
     }
-    const id = pathArray[pathArray.length - 1];
-    if (parseInt(id) > 0) {
+    if (parseInt(movieID.id) > 0) {
       axios
-        .get(`http://localhost:4000/v1/movie/${id}`)
+        .get(`http://localhost:4000/v1/movie/${movieID.id}`)
         .then((json) => {
           const releaseDate = new Date(json.data.movie.release_date);
           setMovie({

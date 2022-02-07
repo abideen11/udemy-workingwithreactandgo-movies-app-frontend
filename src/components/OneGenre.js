@@ -22,8 +22,6 @@ const OneGenre = () => {
       .catch((error1) => setError(error1));
   }, []);
 
-  console.log(from, "from");
-
   if (!movies) {
     setMovies([]);
   }
